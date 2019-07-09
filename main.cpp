@@ -1,12 +1,14 @@
 #include "Adafruit_ILI9341.h"
 #include "usbstk5515.h"
 
-#define CS 12
-#define DC 13
-#define MOSI 14
-#define MISO 15
-#define RST 16
-#define SCLK 17
+
+// GPIO Pins coming out from the P2 Expansion of the board
+#define CS 12 //Pin no 6
+#define DC 13 // Pin no 4
+#define MOSI 14 // Pin no 8
+#define MISO 15 // Pin no 10
+#define RST 16 // Pin no 18
+#define SCLK 17 // Pin no 20
 
 
 int main(void) {
@@ -34,11 +36,19 @@ int main(void) {
 
     // Screen is not cleared for this one -- this is
     // intentional and does not affect the reported time.
-//      start = micros();
     for(x=0; x<wi; x+=r2) {
       for(y=0; y<ht; y+=r2) {
         tft.drawCircle(x, y, radius, ILI9341_WHITE);
       }
+    }
+
+    // Write a string on the display
+    tft.fillScreen(ILI9341_BLUE);
+    tft.setTextSize(2);
+    tft.setRotation(1);
+    char myText[100] = "Interface DSP C5535 with TFT";
+    for(i = 0; i < 28; i++) {
+        tft.write(myText[i]);
     }
 
     return 0;
